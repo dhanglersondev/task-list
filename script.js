@@ -8,23 +8,26 @@ function renderTasks() {
     listElement.innerHTML = '';
 
     tasks.map((todo) => {
+
         let liElement = document.createElement("li");
         let taskText = document.createTextNode(todo);
+
+        liElement.appendChild(taskText);
 
         let linkElement = document.createElement("a");
         linkElement.setAttribute("href", "#");
 
-        let linkText = document.createTextNode("Excluir");
+        let linkText = document.createTextNode(" Excluir");
         linkElement.appendChild(linkText);
 
         let position = tasks.indexOf(todo);
 
-        linkElement.setAttribute("onclick", `deleteTask(${position})`)
+        linkElement.setAttribute("onclick", `deleteTask(${position})`);
 
-        listElement.appendChild(taskText);
         liElement.appendChild(linkElement);
+
         listElement.appendChild(liElement);
-    })
+    });
 }
 
 renderTasks();
