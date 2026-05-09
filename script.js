@@ -5,24 +5,68 @@ let buttonElement = document.querySelector('#app button');
 let tasks = JSON.parse(localStorage.getItem("@listTask")) || [];
 
 function renderTasks() {
+
     listElement.innerHTML = '';
+
+    if (tasks.length === 0) {
+
+        listElement.innerHTML = `
+            <div class="empty-message">
+                Nenhuma tarefa cadastrada.
+            </div>
+        `;
+
+        return;
+    }
 
     tasks.map((todo) => {
 
+        // LI
         let liElement = document.createElement("li");
-        let taskText = document.createTextNode(todo);
 
-        liElement.appendChild(taskText);
+        // CONTAINER ESQUERDA
+        let taskContent = document.createElement("div");
+        taskContent.classList.add("task-content");
 
+        // BOTÃO CHECK
+        let checkButton = document.createElement("button");
+
+        checkButton.innerHTML = "✔";
+
+        checkButton.classList.add("check-button");
+
+        // EVENTO CHECK
+        checkButton.onclick = function () {
+
+            liElement.classList.toggle("completed");
+        };
+
+        // TEXTO
+        let spanText = document.createElement("span");
+
+        spanText.innerText = todo;
+
+        // ADICIONANDO NA ESQUERDA
+        taskContent.appendChild(checkButton);
+
+        taskContent.appendChild(spanText);
+
+        // EXCLUIR
         let linkElement = document.createElement("a");
+
         linkElement.setAttribute("href", "#");
 
-        let linkText = document.createTextNode(" Excluir");
-        linkElement.appendChild(linkText);
+        linkElement.innerText = "Excluir";
 
         let position = tasks.indexOf(todo);
 
-        linkElement.setAttribute("onclick", `deleteTask(${position})`);
+        linkElement.setAttribute(
+            "onclick",
+            `deleteTask(${position})`
+        );
+
+        // MONTAGEM FINAL
+        liElement.appendChild(taskContent);
 
         liElement.appendChild(linkElement);
 

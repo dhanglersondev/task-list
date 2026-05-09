@@ -3,99 +3,395 @@
     margin: 0;
     padding: 0;
     outline: none;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+:root {
+    --primary: #7c3aed;
+    --primary-dark: #5b21b6;
+    --bg-dark: #0f172a;
+    --card: rgba(255, 255, 255, 0.96);
+    --text: #111827;
+    --gray: #6b7280;
+    --border: #e5e7eb;
+    --danger: #ef4444;
+    --success: #10b981;
+}
+
+/* BODY */
+
 body {
-    background: linear-gradient(135deg, #b468f7, #0a0a0a);
     min-height: 100vh;
+
+    background:
+        radial-gradient(circle at top left, #8b5cf6, transparent 30%),
+        radial-gradient(circle at bottom right, #4c1d95, transparent 25%),
+        linear-gradient(135deg, #111827, #0f172a);
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     padding: 20px;
 }
 
+/* APP */
+
 #app {
     width: 100%;
-    max-width: 500px;
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+
+    background: var(--card);
+    backdrop-filter: blur(12px);
+
+    border-radius: 24px;
+
+    padding: 35px;
+
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+
+    animation: appFade 0.5s ease;
 }
+
+/* TÍTULO */
 
 #app h1 {
     text-align: center;
-    margin-bottom: 25px;
-    color: #333;
-    font-size: 32px;
+
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+
+    color: var(--text);
+
+    margin-bottom: 30px;
 }
 
+/* INPUT AREA */
+
+.input-area {
+    display: flex;
+    gap: 12px;
+
+    margin-bottom: 25px;
+}
+
+/* INPUT */
+
 #app input {
-    width: calc(100% - 130px);
-    height: 45px;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    padding: 0 15px;
+    flex: 1;
+
+    height: 54px;
+
+    border: 2px solid var(--border);
+    border-radius: 14px;
+
+    padding: 0 18px;
+
+    background: #f9fafb;
+
     font-size: 16px;
-    transition: 0.3s;
+
+    transition: 0.3s ease;
 }
 
 #app input:focus {
-    border-color: #7c3aed;
+    border-color: var(--primary);
+
+    background: white;
+
+    box-shadow: 0 0 0 5px rgba(124, 58, 237, 0.15);
 }
 
-#app button {
-    width: 110px;
-    height: 45px;
-    margin-left: 10px;
+/* BOTÃO ADICIONAR */
+
+.add-button {
+    height: 54px;
+    min-width: 130px;
+
     border: none;
-    border-radius: 10px;
-    background-color: #7c3aed;
-    color: #fff;
-    font-size: 16px;
-    font-weight: bold;
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        var(--primary),
+        var(--primary-dark)
+    );
+
+    color: white;
+
+    font-size: 15px;
+    font-weight: 700;
+
     cursor: pointer;
-    transition: 0.3s;
+
+    transition: 0.25s ease;
+
+    box-shadow: 0 10px 18px rgba(124, 58, 237, 0.3);
 }
 
-#app button:hover {
-    background-color: #5b21b6;
-    transform: scale(1.03);
+.add-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 14px 24px rgba(124, 58, 237, 0.35);
 }
+
+.add-button:active {
+    transform: scale(0.98);
+}
+
+/* LISTA */
 
 #app ul {
-    margin-top: 25px;
     list-style: none;
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 }
 
+/* ITEM */
+
 #app ul li {
-    background-color: #f3f4f6;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 12px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    color: #333;
-    font-size: 16px;
-    font-weight: bold;
-    transition: 0.3s;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    width: 100%;
+
+    background: #f9fafb;
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    padding: 16px 18px;
+
+    transition: 0.3s ease;
+    animation: taskAnimation 0.3s ease;
 }
 
 #app ul li:hover {
-    transform: translateX(5px);
-    background-color: #e5e7eb;
-    
+    transform: translateY(-3px);
+
+    background: white;
+
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
 }
 
-#app ul li a {
-    text-decoration: none;
-    color: #dc2626;
+/* ESQUERDA */
+
+.task-content {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    flex: 1;
+
+    min-width: 0;
+}
+
+/* TEXTO */
+
+.task-content span {
+    color: var(--text);
+
+    font-size: 16px;
+    font-weight: 600;
+
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+/* BOTÃO CHECK */
+
+.check-button {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+
+    border-radius: 50%;
+
+    border: 2px solid #c4b5fd;
+
+    background: white;
+
+    color: transparent;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 12px;
     font-weight: bold;
-    transition: 0.3s;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+.check-button:hover {
+    border-color: var(--primary);
+
+    transform: scale(1.08);
+}
+
+/* TAREFA CONCLUÍDA */
+
+.completed {
+    background: #ecfdf5 !important;
+
+    border-color: #6ee7b7 !important;
+}
+
+.completed span {
+    text-decoration: line-through;
+
+    color: var(--gray);
+
+    opacity: 0.8;
+}
+
+.completed .check-button {
+    background: var(--success);
+
+    border-color: var(--success);
+
+    color: white;
+}
+
+/* EXCLUIR */
+
+#app ul li a {
+    margin-left: auto;
+
+    text-decoration: none;
+
+    color: var(--danger);
+
+    font-size: 14px;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    transition: 0.2s ease;
 }
 
 #app ul li a:hover {
-    color: #991b1b;
+    color: #b91c1c;
+
+    transform: scale(1.05);
+}
+
+/* SEM TAREFAS */
+
+.empty-message {
+    text-align: center;
+
+    color: var(--gray);
+
+    padding: 25px 10px;
+
+    font-size: 15px;
+}
+
+/* SCROLL */
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c4b5fd;
+
+    border-radius: 10px;
+}
+
+/* ANIMAÇÕES */
+
+@keyframes appFade {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes taskAnimation {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 768px) {
+
+    #app {
+        padding: 28px 22px;
+    }
+
+    #app h1 {
+        font-size: 2rem;
+    }
+
+    .input-area {
+        flex-direction: column;
+    }
+
+    #app input,
+    .add-button {
+        width: 100%;
+    }
+
+    .add-button {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+
+    body {
+        padding: 12px;
+    }
+
+    #app {
+        padding: 22px 18px;
+
+        border-radius: 18px;
+    }
+
+    #app h1 {
+        font-size: 1.8rem;
+
+        margin-bottom: 22px;
+    }
+
+    #app ul li {
+        flex-direction: row;
+
+        align-items: center;
+    }
+
+    .task-content span {
+        font-size: 15px;
+    }
+
+    #app ul li a {
+        font-size: 13px;
+    }
 }
